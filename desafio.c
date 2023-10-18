@@ -1,5 +1,5 @@
 #include "stdio.h"
-#include "windows.h"
+//#include "windows.h"
 
 char medico1[20], medico2[20], medico3[20];
 char data_consulta1[11], data_consulta2[11], data_consulta3[11];
@@ -8,14 +8,14 @@ char data_consulta1[11], data_consulta2[11], data_consulta3[11];
 char verifica_medico[20];
 char verifica_data[11];
 
-//funçoes auxiliares
+//funï¿½oes auxiliares
 void atualizaDados()
 {
     FILE *arquivo;
 
     arquivo = fopen("dados.txt", "r");
 
-    //erro caso o .txt não exista
+    //erro caso o .txt nï¿½o exista
     if (arquivo == NULL)
     {
         printf("ERRO! O ARQUIVO AINDA NAO FOI CRIADO");
@@ -119,7 +119,7 @@ int verificaMed()
     return 0;
 }
 
-//funçoes desafio
+//funï¿½oes desafio
 void entradaDados()
 {
     printf("\nDigite o nome dos 3 medicos: \n");
