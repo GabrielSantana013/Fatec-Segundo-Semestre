@@ -1,5 +1,5 @@
 #include "stdio.h"
-#define ex03
+#define ex01
 
 #ifdef ex01
 
@@ -15,8 +15,47 @@
               unsigned char       unsigned int        unsigned long
 */
 
+struct variaveis
+{
+
+    char n1;
+    int n2;
+    long n3;
+    float n4;
+    double n5;
+    unsigned char n6;
+    unsigned int n7;
+    unsigned long n8;
+
+};
+
+typedef struct variaveis variaveis;
+
+variaveis valores;
+
+
 int main()
 {
+
+    printf("Digite um char:");
+    scanf("%c", &valores.n1);
+    printf("\nDigite um int:");
+    scanf("%d", &valores.n2);
+    printf("\nDigite um long:");
+    scanf("%ld", &valores.n3);
+    printf("\nDigite um float:");
+    scanf("%f", &valores.n4);
+    printf("\nDigite um double:");
+    scanf("%lf", &valores.n5);
+    printf("\nDigite um unsigned char:");
+    scanf("%c", &valores.n6);
+    printf("\nDigite um unsigned int:");
+    scanf("%u", &valores.n7);
+    printf("\nDigite um unsigned long:");
+    scanf("%lu", &valores.n8);
+
+    printf("1234567890123456789012345678901234567890123456789012345678901234567890\n");
+    
 
     return 0;
 }
