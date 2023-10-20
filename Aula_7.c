@@ -1,5 +1,5 @@
 #include "stdio.h"
-#define ex01
+#define ex03
 
 #ifdef ex01
 
@@ -47,6 +47,7 @@ int main()
     scanf("%f", &valores.n4);
     printf("\nDigite um double:");
     scanf("%lf", &valores.n5);
+    setbuf(stdin, NULL);
     printf("\nDigite um unsigned char:");
     scanf("%c", &valores.n6);
     printf("\nDigite um unsigned int:");
@@ -55,7 +56,16 @@ int main()
     scanf("%lu", &valores.n8);
 
     printf("1234567890123456789012345678901234567890123456789012345678901234567890\n");
-    
+    printf("    %-1c         %-8d  %-11ld         %-8.1e          %9.1e", valores.n1, valores.n2, valores.n3, valores.n4, valores.n5);
+    printf("                   %-c                   %-8d            %-11lu", valores.n6, valores.n7,valores.n8);
+
+
+/*
+                10        20        30        40        50        60        70
+    1234567890123456789012345678901234567890123456789012345678901234567890
+        char      int       long                float               double
+              unsigned char       unsigned int        unsigned long
+*/
 
     return 0;
 }
@@ -162,51 +172,68 @@ struct data
 };
 
 typedef struct data data;
+data calendario[2];
 
-void calculaDias(data calendario[2]){
+int calculaDias(data calendario[2]){
 
-    int anoF = calendario[1].ano - calendario[0].ano;
-    int mesF = calendario[1].mes - calendario[0].mes;
-    int diaF = calendario[1].dia - calendario[0].dia;
+    int diasPorMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int dias1 = calendario[0].dia;
+    int dias2 = calendario[1].dia;
 
-    if(calendario[1].dia >= 30 && calendario[1].mes != 0)
+
+    // Adicione os dias dos meses completos no primeiro ano
+    for (int i = 0; i < calendario[0].mes; i++) 
     {
-    while(calendario[1].mes != 0)
-    {
-        calendario[1].mes --;
-        diaF +=30;
-    }    
+        dias1 += diasPorMes[i];
     }
-    else if (calendario[1].dia <= 30 && calendario[1].mes != 0)
+
+    for(int i = 0; i<calendario[1].mes; i++)
     {
-        diaF += calendario[1].dia;
-        while(calendario[1].mes != 0)
-    {
-        calendario[1].mes --;
-        diaF +=30;
-    } 
+        dias2 += diasPorMes[i];
     }
-    
- 
-    printf("%d");
+
+
+        for (int ano = calendario[0].ano; ano < calendario[1].ano; ano++) {
+        if ((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0)) {
+            dias2 += 366;
+        } else {
+            dias2 += 365;
+        }
+    }
+    return dias2-dias1;
 
 }
+ 
 
 int main()
 {
-    data calendario[2];
+
     
-    printf("Digite a data menor: ");
+    printf("Digite uma data (dd MM AAAA):");
     scanf("%d%d%d", &calendario[0].dia,&calendario[0].mes, &calendario[0].ano);
-    printf("Digite a data maior: ");
+    setbuf(stdin,NULL);
+    printf("Digite outra data (dd MM AAAA):");
     scanf("%d%d%d", &calendario[1].dia,&calendario[1].mes, &calendario[1].ano);
+    int diferenca = calculaDias(calendario);
 
-
+    if(diferenca>0)
+    {
+        printf("A diferenca entre as datas e de: %d dias\n", diferenca);
+    }
+    else if(diferenca == 0)
+    {
+        printf("A diferenca e 0.\n");
+    }
+    else
+    {
+        printf("A primeira data deve ser maior que a segunda\n");
+    }
 
     return 0;
 }
 
 #endif
+
 
 #ifdef ex04
 
