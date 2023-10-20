@@ -1,3 +1,5 @@
+/*Todos os programas devem ser encerrados pelo usuário*/
+
 #include "stdio.h"
 #define ex03
 
@@ -36,7 +38,8 @@ variaveis valores;
 
 int main()
 {
-
+    char ch;
+do{
     printf("Digite um char:");
     scanf("%c", &valores.n1);
     printf("\nDigite um int:");
@@ -56,17 +59,14 @@ int main()
     scanf("%lu", &valores.n8);
 
     printf("1234567890123456789012345678901234567890123456789012345678901234567890\n");
-    printf("    %-1c         %-8d  %-11ld         %-8.1e          %9.1e", valores.n1, valores.n2, valores.n3, valores.n4, valores.n5);
-    printf("                   %-c                   %-8d            %-11lu", valores.n6, valores.n7,valores.n8);
+    printf("    %-1c         %-8d  %-11ld         %-8.1e          %9.1e\n", valores.n1, valores.n2, valores.n3, valores.n4, valores.n5);
+    printf("          %-c                   %-8d            %-11lu\n", valores.n6, valores.n7,valores.n8);
+    printf("Deseja encerrar o programa? (s/n):");
+    setbuf(stdin, NULL);
+    ch = getchar();
+    setbuf(stdin, NULL);
 
-
-/*
-                10        20        30        40        50        60        70
-    1234567890123456789012345678901234567890123456789012345678901234567890
-        char      int       long                float               double
-              unsigned char       unsigned int        unsigned long
-*/
-
+}while(ch != 's' && ch != 'S');
     return 0;
 }
 
@@ -208,7 +208,9 @@ int calculaDias(data calendario[2]){
 int main()
 {
 
-    
+char ch;
+
+do{
     printf("Digite uma data (dd MM AAAA):");
     scanf("%d%d%d", &calendario[0].dia,&calendario[0].mes, &calendario[0].ano);
     setbuf(stdin,NULL);
@@ -228,7 +230,12 @@ int main()
     {
         printf("A primeira data deve ser maior que a segunda\n");
     }
+    printf("Deseja encerrar o programa? (s/n):");
+    setbuf(stdin, NULL);
+    ch = getchar();
+    setbuf(stdin, NULL);
 
+}while(ch != 's' && ch != 'S');
     return 0;
 }
 
