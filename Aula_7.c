@@ -1,7 +1,7 @@
 /*Todos os programas devem ser encerrados pelo usuário*/
 
 #include "stdio.h"
-#define ex03
+#define ex02
 
 #ifdef ex01
 
