@@ -139,29 +139,6 @@ int main()
     unsigned long n7, *pn7;
     unsigned char n8, *pn8;
 
-    do
-    {
-        printf("\nDigite um int:");
-        scanf("%d", &n1);
-        printf("\nDigite um long:");
-        scanf("%ld", &n2);
-        printf("\nDigite um unsigned int:");
-        scanf("%u", &n3);
-        printf("\nDigite um float:");
-        scanf("%f", &n4);
-        printf("\nDigite um double:");
-        scanf("%lf", &n5);
-        setbuf(stdin, NULL);
-        printf("\nDigite um char:");
-        scanf("%c", &n6);
-        getchar();
-        printf("\nDigite um unsigned long:");
-        scanf("%lu", &n7);
-        setbuf(stdin, NULL);
-        printf("\nDigite um unsigned char:");
-        scanf("%c", &n8);
-        getchar();
-
         pn1 = &n1;
         pn2 = &n2;
         pn3 = &n3;
@@ -171,9 +148,33 @@ int main()
         pn7 = &n7;
         pn8 = &n8;
 
+    do
+    {
+        printf("\nDigite um int:");
+        scanf("%d", pn1);
+        printf("\nDigite um long:");
+        scanf("%ld", pn2);
+        printf("\nDigite um unsigned int:");
+        scanf("%u", pn3);
+        printf("\nDigite um float:");
+        scanf("%f", pn4);
+        printf("\nDigite um double:");
+        scanf("%lf", pn5);
+        setbuf(stdin, NULL);
+        printf("\nDigite um char:");
+        scanf("%c", pn6);
+        getchar();
+        printf("\nDigite um unsigned long:");
+        scanf("%lu", pn7);
+        setbuf(stdin, NULL);
+        printf("\nDigite um unsigned char:");
+        scanf("%c", pn8);
+        getchar();
+
+
         printf("\n123456789012345678901234567890123456789012345678901234567890\n");
         printf("    %-8d            %-11ld         %-8d \n", *pn1, *pn2, *pn3);
-        printf("              %-8.1f            %.2f             %-1c\n", *pn4, *pn5, *pn6);
+        printf("              %-8.1f            %.2f                %-1c\n", *pn4, *pn5, *pn6);
         printf("         %-11lu                   %-1c\n", *pn7, *pn8);
 
         /*          10        20        30        40        50        60
