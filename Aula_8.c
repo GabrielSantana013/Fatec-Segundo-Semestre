@@ -1,12 +1,12 @@
 #include "stdio.h"
-#define ex02
+#define ex03
 
 #ifdef ex01
 
 /*
 1 - Receba 2 string de ate 10 caracteres via teclado na funcao main(). Faça uma
-    funcao para compara-las usando ponteiros e retorne como resultado se 
-    sao IGUAIS 1 ou se sao DIFERENTES 0 para a funcao main(). 
+    funcao para compara-las usando ponteiros e retorne como resultado se
+    sao IGUAIS 1 ou se sao DIFERENTES 0 para a funcao main().
     Imprima o resultado na funcao main(). Declare os vetores como variavel global
     */
 
@@ -24,13 +24,12 @@ int comparaString()
         pStr1++;
         pStr2++;
 
-        if(*pStr1 != *pStr2)
+        if (*pStr1 != *pStr2)
         {
             return 0;
         }
     }
     return 1;
-
 }
 
 int main()
@@ -66,34 +65,36 @@ int main()
 #ifdef ex02
 
 /*
-2 - Escreva um programa que receba uma letra via teclado usando ponteiro. Escreva 
-    uma funcao que pesquise esta letra existe no vetor abaixo usando ponteiros. 
+2 - Escreva um programa que receba uma letra via teclado usando ponteiro. Escreva
+    uma funcao que pesquise esta letra existe no vetor abaixo usando ponteiros.
     Imprima o resultado da pesquisa no video na funcao main(). Passe como informacao
-    para a funcao a letra digitada usando ponteiros.(utilize o comando return). 
+    para a funcao a letra digitada usando ponteiros.(utilize o comando return).
     O vetor deve ser declarado como variavel global.
 
     vetor -> b,d,f,h,j,k,m,o,q,s,u,w,y
 */
 
-char key[] = {'b','d','f','h','j','k','m','o','q','s','u','w','y'};
+char key[] = {'b', 'd', 'f', 'h', 'j', 'k', 'm', 'o', 'q', 's', 'u', 'w', 'y'};
 
-int buscaLetra(char *pLetra){
+int buscaLetra(char *pLetra)
+{
 
     char *pKey;
     pKey = &key[0];
 
-    for(int i = 0; *pKey != '\0'; i++, pKey++)
-    {   
-        if(*pLetra == *pKey)
+    for (int i = 0; *pKey != '\0'; i++, pKey++)
+    {
+        if (*pLetra == *pKey)
         {
-            return 1;    
+            return 1;
         }
     }
 
     return 0;
 }
 
-int main(){
+int main()
+{
 
     char letra;
     char *pLetra;
@@ -105,7 +106,7 @@ int main(){
     int retorno = buscaLetra(pLetra);
 
     retorno == 1 ? printf("Letra encontrada!") : printf("Letra nao encontrada!");
-    //condicao ? valor se verdadeiro : valor se falso
+    // condicao ? valor se verdadeiro : valor se falso
 
     return 0;
 }
@@ -114,9 +115,78 @@ int main(){
 
 #ifdef ex03
 
-int main(){
+/*
+3 - Escreva um programa que receba via teclado usando ponteiros um char,
+    int, long, unsigned, float, double, unsigned long e unsigned char,
+    e imprima-os no video utilizando ponteiros no seguinte formato:
 
+            10        20        30        40        50        60
+    123456789012345678901234567890123456789012345678901234567890
+        int                 long                unsigned
+                  float               double              char
+             unsigned long       unsigned char
+*/
 
+int main()
+{
+
+    int n1, *pn1;
+    long n2, *pn2;
+    unsigned n3, *pn3;
+    float n4, *pn4;
+    double n5, *pn5;
+    char n6, *pn6, ch;
+    unsigned long n7, *pn7;
+    unsigned char n8, *pn8;
+
+    do
+    {
+        printf("\nDigite um int:");
+        scanf("%d", &n1);
+        printf("\nDigite um long:");
+        scanf("%ld", &n2);
+        printf("\nDigite um unsigned int:");
+        scanf("%u", &n3);
+        printf("\nDigite um float:");
+        scanf("%f", &n4);
+        printf("\nDigite um double:");
+        scanf("%lf", &n5);
+        setbuf(stdin, NULL);
+        printf("\nDigite um char:");
+        scanf("%c", &n6);
+        getchar();
+        printf("\nDigite um unsigned long:");
+        scanf("%lu", &n7);
+        setbuf(stdin, NULL);
+        printf("\nDigite um unsigned char:");
+        scanf("%c", &n8);
+        getchar();
+
+        pn1 = &n1;
+        pn2 = &n2;
+        pn3 = &n3;
+        pn4 = &n4;
+        pn5 = &n5;
+        pn6 = &n6;
+        pn7 = &n7;
+        pn8 = &n8;
+
+        printf("\n123456789012345678901234567890123456789012345678901234567890\n");
+        printf("    %-8d            %-11ld         %-8d \n", *pn1, *pn2, *pn3);
+        printf("              %-8.1f            %.2f             %-1c\n", *pn4, *pn5, *pn6);
+        printf("         %-11lu                   %-1c\n", *pn7, *pn8);
+
+        /*          10        20        30        40        50        60
+        123456789012345678901234567890123456789012345678901234567890
+            int                 long                unsigned
+                      float               double              char
+                 unsigned long       unsigned char
+        */
+        printf("Deseja encerrar o programa? (s/n):");
+        ch = getchar();
+        setbuf(stdin, NULL);
+
+    } while (ch != 's' && ch != 'S');
     return 0;
 }
 
@@ -124,8 +194,14 @@ int main(){
 
 #ifdef ex04
 
-int main(){
+/*4 - Escreva um programa que receba via teclado numeros inteiros positivos usando
+    ponteiros. Quando o numero digitado for negativo o programa deve parar e calcula
+    a media dos valores digitados e mostrar o resultado. Todos os calculos devem ser
+    feitos usando ponteiro.
+*/
 
+int main()
+{
 
     return 0;
 }
@@ -134,8 +210,8 @@ int main(){
 
 #ifdef ex05
 
-int main(){
-
+int main()
+{
 
     return 0;
 }
@@ -144,8 +220,8 @@ int main(){
 
 #ifdef ex06
 
-int main(){
-
+int main()
+{
 
     return 0;
 }
