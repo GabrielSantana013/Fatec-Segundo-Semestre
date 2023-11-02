@@ -245,6 +245,20 @@ pessoa cadastro[4];
 pessoa *ptrCadastro = &cadastro[0];
 
 
+void imprimiCadastro(){
+
+int i = 0;
+
+    for(i = 0; i<4; i++)
+    {
+        printf("Nome da pessoa %d: %s\n", i+1, ptrCadastro[i].nome);
+        printf("Endereco da pessoa %d: %s\n", i+1, ptrCadastro[i].endereco);
+        printf("Cidade da pessoa %d: %s\n", i+1, ptrCadastro[i].cidade);
+        printf("Estado da pessoa %d: %s\n", i+1, ptrCadastro[i].estado);
+    }
+
+}
+
 void cadastrar(){
 
 int i = 0;
@@ -266,9 +280,12 @@ int i = 0;
 
 }
 
+
+
 int main()
 {
     cadastrar();
+    imprimiCadastro();
 
     return 0;
 }
