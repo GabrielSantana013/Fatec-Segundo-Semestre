@@ -1,5 +1,5 @@
 #include "stdio.h"
-#define ex01
+#define ex03
 
 #ifdef ex01
 
@@ -94,8 +94,39 @@ int main()
     vetor -> b,d,f,h,j,k,m,o,q,s,u,w,y
 */
 
+int buscaLetra(char *pLetra, char *ptrChave)
+{
+
+    for (int i = 0; *ptrChave != '\0'; i++, ptrChave++)
+    {
+        if (*pLetra == *ptrChave)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 int main()
 {
+    char key[] = {'b', 'd', 'f', 'h', 'j', 'k', 'm', 'o', 'q', 's', 'u', 'w', 'y'};
+    char *ptrChave;
+    ptrChave = &key[0];
+
+    char letra;
+    char *pLetra;
+
+    pLetra = &letra;
+
+    printf("Digite uma letra: \n");
+    scanf("%c", pLetra);
+    int retorno = buscaLetra(pLetra, ptrChave);
+
+    retorno == 1 ? printf("Letra encontrada!") : printf("Letra nao encontrada!");
+    // condicao ? valor se verdadeiro : valor se falso
+
+    return 0;
 }
 
 #endif
