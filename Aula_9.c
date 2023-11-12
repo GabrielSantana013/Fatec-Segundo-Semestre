@@ -1,5 +1,6 @@
 #include "stdio.h"
-#define ex03
+#include "stdlib.h"
+#define ex02
 
 #ifdef ex01
 
@@ -18,12 +19,11 @@ void recebeString(char *pStr1, char *pStr2)
     gets(pStr1);
     printf("Digite outra string:");
     gets(pStr2);
-
 }
 
 int comparaString(char *pStr1, char *pStr2)
 {
-   
+
     for (int i = 0; *pStr1 != '\0' && *pStr2 != '\0'; i++)
     {
         pStr1++;
@@ -37,16 +37,15 @@ int comparaString(char *pStr1, char *pStr2)
     return 1;
 }
 
-
 int main()
 {
     char esc, str1[11], str2[11], *pStr1, *pStr2;
-    pStr1 = & str1[0];
-    pStr2 = & str2[0];
+    pStr1 = &str1[0];
+    pStr2 = &str2[0];
     do
     {
         recebeString(pStr1, pStr2);
-        int retorno = comparaString(pStr1,pStr2);
+        int retorno = comparaString(pStr1, pStr2);
 
         if (retorno == 1)
         {
@@ -75,8 +74,70 @@ int main()
     As variaveis sao LOCAIS na funcao main().
 */
 
+int soma(int pnumero, float res){
+    return pnumero + res;
+}
+
+int sub(int pnumero, float res){
+    return res - pnumero;
+}
+int mult(int pnumero, float res){
+    return pnumero * res;
+}
+float divi(int pnumero, float res){
+    if(pnumero == 0)
+    {
+        printf("Nao e possivel dividir por 0.");
+        return 0;
+    }
+    else{
+    return res/pnumero;}
+}
+
 int main()
 {
+    int numero, *pnumeros;
+    char escolha;
+    float res = 0;
+    
+    while (1)
+    {
+        printf("Digite um numero:\n");
+        scanf("%d", &numero);
+        pnumeros = &numero;
+
+        printf("Qual operacao voce deseja fazer com os numeros? (+) (-) (x) (/)\n");
+        printf("OU digite '=' para sair\n");
+       
+        getchar(); // limpa buffer
+        escolha = getchar();
+
+        switch (escolha)
+        {
+        case '+':
+            res = soma(*pnumeros, res);
+            printf("Resultado: %.2f\n", res);
+            break;
+        case '-':
+        res = sub(*pnumeros, res);
+        printf("Resultado: %.2f\n", res);
+            break;
+        case 'x':
+            res = mult(*pnumeros, res);
+            printf("Resultado: %.2f\n", res);
+            break;
+        case '/':
+            res = divi(*pnumeros, res);
+            printf("Resultado: %.2f\n", res);
+            break;
+        case '=':
+            exit(0);
+            break;
+        default:
+            printf("Operacao inválida, tente novamente.");
+        }
+        
+    }
 }
 
 #endif
@@ -147,9 +208,33 @@ int main()
         char      int       long                float               double
               unsigned char       unsigned int        unsigned long
 */
+void recebeDados(){
+
+
+
+
+}
+
+void imprimeDados(){
+
+}
 
 int main()
 {
+    struct variaveis{
+        char n1;
+        int n2;
+        long n3;
+        float n4;
+        double n5;
+        unsigned char n6;
+        unsigned int n7;
+        unsigned long n8;
+
+    };
+
+    typedef struct variaveis variaveis;
+    
 }
 
 #endif
