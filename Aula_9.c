@@ -1,6 +1,6 @@
 #include "stdio.h"
 #include "stdlib.h"
-#define ex02
+#define ex04
 
 #ifdef ex01
 
@@ -208,20 +208,8 @@ int main()
         char      int       long                float               double
               unsigned char       unsigned int        unsigned long
 */
-void recebeDados(){
 
-
-
-
-}
-
-void imprimeDados(){
-
-}
-
-int main()
-{
-    struct variaveis{
+struct variaveis{
         char n1;
         int n2;
         long n3;
@@ -230,11 +218,44 @@ int main()
         unsigned char n6;
         unsigned int n7;
         unsigned long n8;
-
     };
 
-    typedef struct variaveis variaveis;
+void recebeDados(struct variaveis *ptr){
     
+    printf("Digite um caractere: \n");
+    scanf("%c", &(ptr->n1));
+    printf("Digite um int: \n");
+    scanf("%d", &(ptr->n2));
+    printf("Digite um long: \n");
+    scanf("%ld", &(ptr->n3));
+    printf("Digite um float: \n");
+    scanf("%f", &(ptr->n4));
+    printf("Digite um doule: \n");
+    scanf("%lf", &(ptr->n5));
+    getchar(); //limpa buffer
+    printf("Digite um unsigned char: \n");
+    scanf("%c", &(ptr->n6));
+    printf("Digite um unsigned int: \n");
+    scanf("%u", &(ptr->n7));
+    printf("Digite um unsigned long: \n");
+    scanf("%lu", &(ptr->n8));
+
+}
+
+void imprimeDados(struct variaveis *ptr){
+    
+    printf("123456789012345678901234567890123456789012345678901234567890\n");
+    printf("    %-1c         %-8d  %-11ld         %-8.1f  %-9.1lf\n", ptr->n1, ptr->n2, ptr->n3, ptr->n4, ptr->n5);
+    printf("         %-1c                   %-8u            %-11lu", ptr->n6, ptr->n7, ptr->n8);
+}
+
+int main()
+{
+    typedef struct variaveis variaveis;
+    variaveis cadastro, *ptr;
+    ptr = &cadastro;
+    recebeDados(ptr);
+    imprimeDados(ptr);
 }
 
 #endif
