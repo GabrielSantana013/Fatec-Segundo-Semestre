@@ -1,6 +1,6 @@
 #include "stdio.h"
 #include "stdlib.h"
-#define ex04
+#define ex05
 
 #ifdef ex01
 
@@ -74,24 +74,30 @@ int main()
     As variaveis sao LOCAIS na funcao main().
 */
 
-int soma(int pnumero, float res){
+int soma(int pnumero, float res)
+{
     return pnumero + res;
 }
 
-int sub(int pnumero, float res){
+int sub(int pnumero, float res)
+{
     return res - pnumero;
 }
-int mult(int pnumero, float res){
+int mult(int pnumero, float res)
+{
     return pnumero * res;
 }
-float divi(int pnumero, float res){
-    if(pnumero == 0)
+float divi(int pnumero, float res)
+{
+    if (pnumero == 0)
     {
         printf("Nao e possivel dividir por 0.");
         return 0;
     }
-    else{
-    return res/pnumero;}
+    else
+    {
+        return res / pnumero;
+    }
 }
 
 int main()
@@ -99,7 +105,7 @@ int main()
     int numero, *pnumeros;
     char escolha;
     float res = 0;
-    
+
     while (1)
     {
         printf("Digite um numero:\n");
@@ -108,7 +114,7 @@ int main()
 
         printf("Qual operacao voce deseja fazer com os numeros? (+) (-) (x) (/)\n");
         printf("OU digite '=' para sair\n");
-       
+
         getchar(); // limpa buffer
         escolha = getchar();
 
@@ -119,8 +125,8 @@ int main()
             printf("Resultado: %.2f\n", res);
             break;
         case '-':
-        res = sub(*pnumeros, res);
-        printf("Resultado: %.2f\n", res);
+            res = sub(*pnumeros, res);
+            printf("Resultado: %.2f\n", res);
             break;
         case 'x':
             res = mult(*pnumeros, res);
@@ -136,7 +142,6 @@ int main()
         default:
             printf("Operacao inválida, tente novamente.");
         }
-        
     }
 }
 
@@ -209,19 +214,21 @@ int main()
               unsigned char       unsigned int        unsigned long
 */
 
-struct variaveis{
-        char n1;
-        int n2;
-        long n3;
-        float n4;
-        double n5;
-        unsigned char n6;
-        unsigned int n7;
-        unsigned long n8;
-    };
+struct variaveis
+{
+    char n1;
+    int n2;
+    long n3;
+    float n4;
+    double n5;
+    unsigned char n6;
+    unsigned int n7;
+    unsigned long n8;
+};
 
-void recebeDados(struct variaveis *ptr){
-    
+void recebeDados(struct variaveis *ptr)
+{
+
     printf("Digite um caractere: \n");
     scanf("%c", &(ptr->n1));
     printf("Digite um int: \n");
@@ -232,18 +239,18 @@ void recebeDados(struct variaveis *ptr){
     scanf("%f", &(ptr->n4));
     printf("Digite um doule: \n");
     scanf("%lf", &(ptr->n5));
-    getchar(); //limpa buffer
+    getchar(); // limpa buffer
     printf("Digite um unsigned char: \n");
     scanf("%c", &(ptr->n6));
     printf("Digite um unsigned int: \n");
     scanf("%u", &(ptr->n7));
     printf("Digite um unsigned long: \n");
     scanf("%lu", &(ptr->n8));
-
 }
 
-void imprimeDados(struct variaveis *ptr){
-    
+void imprimeDados(struct variaveis *ptr)
+{
+
     printf("123456789012345678901234567890123456789012345678901234567890\n");
     printf("    %-1c         %-8d  %-11ld         %-8.1f  %-9.1lf\n", ptr->n1, ptr->n2, ptr->n3, ptr->n4, ptr->n5);
     printf("         %-1c                   %-8u            %-11lu", ptr->n6, ptr->n7, ptr->n8);
@@ -272,8 +279,76 @@ int main()
      estutura: nome, end, cidade, estado, cep
 */
 
+struct cadastro
+{
+
+    char nome[15], end[35], cidade[15], estado[2];
+    int cep;
+};
+
+void cadastrar(struct cadastro *ptr)
+{
+    for (int i = 1; i <= 4; i++)
+    {
+        printf("Digite o nome da pessoa %d:\n", i);
+        gets(ptr->nome);
+        printf("Digite o endereco da pessoa %d:\n", i);
+        gets(ptr->end);
+        printf("Digite a cidade da pessoa %d:\n", i);
+        gets(ptr->cidade);
+        printf("Digite o estado da pessoa %d:\n", i);
+        gets(ptr->estado);
+        printf("Digite o CEP da pessoa %d:\n", i);
+        scanf("%d", &ptr->cep); // perguntar pq &ptr->cep funciona e ptr->cep ñ
+        getchar();// limpa buffer
+
+        ptr++;
+    }
+}
+
+void imprimeCadastro(struct cadastro *ptr)
+{
+    for(int i = 1; i<=4; i++)
+    {
+        printf("Nome da pessoa %d: %s\n", i, ptr->nome);
+        printf("Endereco da pessoa %d: %s\n", i, ptr->end);
+        printf("Cidade da pessoa %d: %s\n", i, ptr->cidade);
+        printf("Estado da pessoa %d: %s\n", i, ptr->estado);
+        printf("CEP da pessoa %d: %d\n\n\n", i, ptr->cep);  
+        ptr++;  
+    }
+
+}
+
 int main()
 {
+    int menu;
+    typedef struct cadastro cadastro;
+    cadastro cadastros[4], *ptr;
+    ptr = &cadastros[0];
+    while (1)
+    {
+        printf("O que voce deseja fazer?\n");
+        printf("1-Cadastrar\n2-Imprimir Dados\n3-Sair\n");
+        scanf("%d", &menu);
+        getchar(); // limpa buffer
+
+        switch (menu)
+        {
+        case 1:
+            cadastrar(ptr);
+            break;
+            ;
+        case 2:
+            imprimeCadastro(ptr);
+            break;
+        case 3:
+            exit(0);
+            break;
+        default:
+            printf("Opcao invalida, tente novamente.\n");
+        }
+    }
 }
 
 #endif
