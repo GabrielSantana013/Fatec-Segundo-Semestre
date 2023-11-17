@@ -1,6 +1,6 @@
 #include "stdio.h"
 #include "stdlib.h"
-#define ex05
+#define ex06
 
 #ifdef ex01
 
@@ -300,7 +300,7 @@ void cadastrar(struct cadastro *ptr)
         gets(ptr->estado);
         printf("Digite o CEP da pessoa %d:\n", i);
         scanf("%d", &ptr->cep); // perguntar pq &ptr->cep funciona e ptr->cep ñ
-        getchar();// limpa buffer
+        getchar();              // limpa buffer
 
         ptr++;
     }
@@ -308,16 +308,15 @@ void cadastrar(struct cadastro *ptr)
 
 void imprimeCadastro(struct cadastro *ptr)
 {
-    for(int i = 1; i<=4; i++)
+    for (int i = 1; i <= 4; i++)
     {
         printf("Nome da pessoa %d: %s\n", i, ptr->nome);
         printf("Endereco da pessoa %d: %s\n", i, ptr->end);
         printf("Cidade da pessoa %d: %s\n", i, ptr->cidade);
         printf("Estado da pessoa %d: %s\n", i, ptr->estado);
-        printf("CEP da pessoa %d: %d\n\n\n", i, ptr->cep);  
-        ptr++;  
+        printf("CEP da pessoa %d: %d\n\n\n", i, ptr->cep);
+        ptr++;
     }
-
 }
 
 int main()
@@ -360,8 +359,119 @@ int main()
     exclui um registro sempre usando ponteiros.
 */
 
+struct cadastro
+{
+
+    char nome[15], end[35], cidade[15], estado[2];
+    int cep;
+};
+
+void cadastrar(struct cadastro *ptr)
+{
+    for (int i = 1; i <= 4; i++)
+    {
+        printf("Digite o nome da pessoa %d:\n", i);
+        gets(ptr->nome);
+        printf("Digite o endereco da pessoa %d:\n", i);
+        gets(ptr->end);
+        printf("Digite a cidade da pessoa %d:\n", i);
+        gets(ptr->cidade);
+        printf("Digite o estado da pessoa %d:\n", i);
+        gets(ptr->estado);
+        printf("Digite o CEP da pessoa %d:\n", i);
+        scanf("%d", &ptr->cep); // perguntar pq &ptr->cep funciona e ptr->cep ñ
+        getchar();              // limpa buffer
+
+        ptr++;
+    }
+}
+
+void imprimeCadastro(struct cadastro *ptr)
+{
+    for (int i = 1; i <= 4; i++)
+    {
+        printf("Nome da pessoa %d: %s\n", i, ptr->nome);
+        printf("Endereco da pessoa %d: %s\n", i, ptr->end);
+        printf("Cidade da pessoa %d: %s\n", i, ptr->cidade);
+        printf("Estado da pessoa %d: %s\n", i, ptr->estado);
+        printf("CEP da pessoa %d: %d\n\n\n", i, ptr->cep);
+        ptr++;
+    }
+}
+
+int procura(struct cadastro *ptr)
+{
+    int i = 0, j = 0;
+    char nome[15];
+    printf("Digite o nome que voce deseja buscar:\n\n");
+    gets(&nome);
+    while (j<4)
+    {
+        for (i = 0; nome[i] != '\0' || ptr->nome[i] != '\0'; i++)
+        {
+            if (nome[i] != ptr->nome[i])
+            {
+                break;
+            }
+        }
+        if (nome[i] == '\0' && ptr->nome[i] == '\0')
+        {
+            printf("Nome: %s\n", ptr->nome);
+            printf("Endereco: %s\n", ptr->end);
+            printf("Cidade: %s\n", ptr->cidade);
+            printf("Estado: %s\n", ptr->estado);
+            printf("CEP: %d\n", ptr->cep);
+            return 1;
+        }
+        else
+        {
+            ptr++;
+        }
+        j++;
+    }
+    return 0;
+}
+
 int main()
 {
+    int menu;
+    typedef struct cadastro cadastro;
+    cadastro cadastros[4], *ptr;
+    ptr = &cadastros[0];
+    while (1)
+    {
+        printf("O que voce deseja fazer?\n");
+        printf("1-Cadastrar\n2-Imprimir Dados\n3-Procurar pessoas\n4-Alterar dados\n5-Excluir Registros\n6-Sair\n");
+        scanf("%d", &menu);
+        getchar(); // limpa buffer
+
+        switch (menu)
+        {
+        case 1:
+            cadastrar(ptr);
+            break;
+
+        case 2:
+            imprimeCadastro(ptr);
+            break;
+        case 3:
+            int retorno = procura(ptr);
+            if (retorno != 1)
+            {
+                printf("\nPessoa nao encontrada\n\n");
+            }
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            exit(0);
+            break;
+        default:
+            printf("Opcao invalida, tente novamente.\n");
+        }
+    }
 }
 
 #endif
