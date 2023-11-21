@@ -2,7 +2,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-//OBS.: Todos os programa devem ser finalizados pelo usuario.
+// OBS.: Todos os programa devem ser finalizados pelo usuario.
 
 #ifdef ex01
 /*
@@ -20,43 +20,43 @@ int main()
     char imprimeChar;
     char esc;
 
-do
-{
-
-    if((ptrArq = fopen("arq.txt","w"))==NULL)
-	{
-        printf("Erro na abertura do arquivo.\n");
-        exit(0);  //Encerra o programa
-	}
-    printf("Digite caracteres para serem armazenados ('0' finaliza o processo)\n");
-
     do
     {
-        recebeChar = getchar();
-        if(recebeChar != '0')
-            putc(recebeChar, ptrArq);
-    }while(recebeChar != '0');
 
-    fclose(ptrArq);
+        if ((ptrArq = fopen("arq.txt", "w")) == NULL)
+        {
+            printf("Erro na abertura do arquivo.\n");
+            exit(0); // Encerra o programa
+        }
+        printf("Digite caracteres para serem armazenados ('0' finaliza o processo)\n");
 
-    if((ptrArq = fopen("arq.txt","r"))==NULL)
-	{
-        printf("Erro na abertura do arquivo.\n");
-        exit(0);  //Encerra o programa
-	}
+        do
+        {
+            recebeChar = getchar();
+            if (recebeChar != '0')
+                putc(recebeChar, ptrArq);
+        } while (recebeChar != '0');
 
-	printf("\nCaracteres digitados: ");
-    do
-    {
-        imprimeChar = getc(ptrArq);
-        putchar(imprimeChar);
-    }while(imprimeChar != EOF);
+        fclose(ptrArq);
 
-    printf("\nDeseja encerrar o programa?\t(s/n)");
-    getchar();
-    scanf("%c",&esc);
+        if ((ptrArq = fopen("arq.txt", "r")) == NULL)
+        {
+            printf("Erro na abertura do arquivo.\n");
+            exit(0); // Encerra o programa
+        }
 
-}while(esc != 'S' && esc != 's');
+        printf("\nCaracteres digitados: ");
+        do
+        {
+            imprimeChar = getc(ptrArq);
+            putchar(imprimeChar);
+        } while (imprimeChar != EOF);
+
+        printf("\nDeseja encerrar o programa?\t(s/n)");
+        getchar();
+        scanf("%c", &esc);
+
+    } while (esc != 'S' && esc != 's');
 
     return 0;
 }
@@ -96,29 +96,29 @@ void inserirContato(dados *ptrDados)
 {
     FILE *ptrArq;
 
-    if((ptrArq = fopen("arq.txt","w"))==NULL)
-	{
-        printf("Erro na abertura do arquivo.\n");
-        exit(0);  //Encerra o programa
-	}
-
-	for(int i = 0; i < 4; i++)
+    if ((ptrArq = fopen("arq.txt", "w")) == NULL)
     {
-        printf("Digite o nome do %do medico a ser adicionado: \n",i+1);
-        gets((ptrDados+i)->nome);
+        printf("Erro na abertura do arquivo.\n");
+        exit(0); // Encerra o programa
+    }
 
-        printf("Digite o telefone do %do medico a ser adicionado: \n",i+1);
-        gets((ptrDados+i)->tel);
+    for (int i = 0; i < 4; i++)
+    {
+        printf("Digite o nome do %do medico a ser adicionado: \n", i + 1);
+        gets((ptrDados + i)->nome);
 
-        printf("Digite o dia do aniversario do %do medico a ser adicionado: \n",i+1);
-        scanf("%d", &(ptrDados+i)->niverDia);
+        printf("Digite o telefone do %do medico a ser adicionado: \n", i + 1);
+        gets((ptrDados + i)->tel);
+
+        printf("Digite o dia do aniversario do %do medico a ser adicionado: \n", i + 1);
+        scanf("%d", &(ptrDados + i)->niverDia);
         getchar();
 
-        printf("Digite o mes do aniversario do %do medico a ser adicionado: \n",i+1);
-        scanf("%d", &(ptrDados+i)->niverMes);
+        printf("Digite o mes do aniversario do %do medico a ser adicionado: \n", i + 1);
+        scanf("%d", &(ptrDados + i)->niverMes);
         getchar();
 
-        fwrite((ptrDados+i), sizeof((ptrDados+i)),1,ptrArq); //TEM ALGUMA COISA ERRADA C ISSO AQUI
+        fwrite((ptrDados + i), sizeof((ptrDados + i)), 1, ptrArq); // TEM ALGUMA COISA ERRADA C ISSO AQUI
     }
 
     fclose(ptrArq);
@@ -126,32 +126,26 @@ void inserirContato(dados *ptrDados)
 
 void listarTodosContatos()
 {
-
 }
 
 void pesquisarContatoNome()
 {
-
 }
 
 void pesquisarContatosLetra()
 {
-
 }
 
 void listarAniversariantes()
 {
-
 }
 
 void alterarContato()
 {
-
 }
 
 void excluirContato()
 {
-
 }
 
 int main()
@@ -162,52 +156,52 @@ int main()
 
     printf("===MENU===\n");
 
-    //do
+    // do
     //{
-        printf("[1] - Inserir contato\n[2] - Listar todos os contatos\n[3] - Pesquisar um contato pelo nome\n[4] - Listar os contatos cujo nome inicia com a letra digitada\n[5] - Imprimir os aniversariantes do mês.\n[6] - Alterar contato\n[7] - Excluir contato\n[8] - Sair\n");
-        scanf("%c", &select);
-        getchar(); //Limpa o buffer
+    printf("[1] - Inserir contato\n[2] - Listar todos os contatos\n[3] - Pesquisar um contato pelo nome\n[4] - Listar os contatos cujo nome inicia com a letra digitada\n[5] - Imprimir os aniversariantes do mês.\n[6] - Alterar contato\n[7] - Excluir contato\n[8] - Sair\n");
+    scanf("%c", &select);
+    getchar(); // Limpa o buffer
 
-        switch(select)
-        {
-        case '1':
-            inserirContato(ptrDados);
-            break;
+    switch (select)
+    {
+    case '1':
+        inserirContato(ptrDados);
+        break;
 
-        case '2':
-            //a
-            break;
+    case '2':
+        // a
+        break;
 
-        case '3':
-            //a
-            break;
+    case '3':
+        // a
+        break;
 
-        case '4':
-            //a
-            break;
+    case '4':
+        // a
+        break;
 
-        case '5':
-            //a
-            break;
+    case '5':
+        // a
+        break;
 
-        case '6':
-            //a
-            break;
+    case '6':
+        // a
+        break;
 
-        case '7':
-            //a
-            break;
+    case '7':
+        // a
+        break;
 
-        case '8':
-            exit(0);
+    case '8':
+        exit(0);
 
-        default:
-            printf("Opcao invalida, tente novamente.\n");
-        }
+    default:
+        printf("Opcao invalida, tente novamente.\n");
+    }
 
-        /*printf("\nDeseja encerrar o programa?\t(s/n)");
-        getchar();
-        scanf("%c",&esc);*/
+    /*printf("\nDeseja encerrar o programa?\t(s/n)");
+    getchar();
+    scanf("%c",&esc);*/
 
     //}while(esc != 's' && esc != 'S');
 
@@ -261,29 +255,35 @@ struct cadastro
     char nome[20], email[40], nCelular[14];
 };
 
-void registro(struct cadastro *ptr, FILE *pfile)
+void registro(FILE *pfile, struct cadastro *ptr)
 {
-    //abre o arquivo para adicionar dados
+    char ch;
+    // abre o arquivo para adicionar dados
     pfile = fopen("dados.txt", "a");
 
-    //se n existir,cria o arquivo
+    // se n existir,cria o arquivo
     if (pfile == NULL)
     {
         pfile = fopen("dados.txt", "w+");
     }
 
-    printf("Digite o nome do cliente:\n");
-    gets(ptr->nome);
-    printf("Digite o email do cliente:\n");
-    gets(ptr->email);
-    printf("Digite o numero do cliente:\n");
-    gets(ptr->nCelular);
+    do
+    {
+        printf("Digite o nome do cliente:\n");
+        gets(ptr->nome);
+        printf("Digite o email do cliente:\n");
+        gets(ptr->email);
+        printf("Digite o numero do cliente:\n");
+        gets(ptr->nCelular);
 
-    fseek(pfile, 0, 2);
-    fwrite(ptr->nome, sizeof(ptr->nome), 1, pfile);
-    fwrite(ptr->email, sizeof(ptr->email), 1, pfile);
-    fwrite(ptr->nCelular, sizeof(ptr->nCelular), 1, pfile);
+        fwrite(ptr, sizeof(struct cadastro), 1, pfile);
 
+        printf("Deseja adicionar outro cliente? (s) ou (n)\n");
+
+        ch = getchar();
+        getchar();
+
+    } while (ch != 'n' && ch != 'N');
     fclose(pfile);
 }
 
@@ -291,15 +291,122 @@ void listarRegistro(FILE *pfile, struct cadastro *ptr)
 {
     pfile = fopen("dados.txt", "r");
     fseek(pfile, 0, 0);
-    while(fread(ptr,sizeof(ptr),1,pfile) == 1)
+    while (fread(ptr, sizeof(struct cadastro), 1, pfile) == 1)
     {
+        if(ptr->nome[0] != '*')
+        {
         printf("Nome do cliente: %s\n", ptr->nome);
         printf("Email do cliente: %s\n", ptr->email);
         printf("Numero do cliente: %s\n", ptr->nCelular);
+        }
     }
-    
+
     fclose(pfile);
 }
+
+void pesquisaRegistro(FILE *pfile, struct cadastro *ptr)
+{
+    int i = 0;
+    char nomeLocal[20];
+    printf("Qual o nome do registro que voce deseja buscar?\n");
+    gets(nomeLocal);
+
+    pfile = fopen("dados.txt", "r");
+
+    fseek(pfile, 0, 0);
+    while (fread(ptr, sizeof(struct cadastro), 1, pfile) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptr->nome[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptr->nome[i])
+            {
+                break;
+            }
+        }
+            if (nomeLocal[i] == '\0' && ptr->nome[i] == '\0')
+            {
+                printf("\nNome do cliente: %s\n", ptr->nome);
+                printf("Email do cliente: %s\n", ptr->email);
+                printf("Numero do cliente: %s\n\n", ptr->nCelular);
+                break;
+            }
+    }
+    fclose(pfile);
+}
+
+void alteraRegistro(FILE *pfile, struct cadastro *ptr)
+{
+    char nomeLocal[20];
+    int i = 0;
+    printf("Qual o nome do registro que voce deseja alterar?\n");
+    gets(nomeLocal);
+    pfile = fopen("dados.txt", "r+");
+
+    fseek(pfile, 0, 0);
+    while (fread(ptr, sizeof(struct cadastro), 1, pfile) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptr->nome[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptr->nome[i])
+            {
+                break;
+            }
+        }
+            if (nomeLocal[i] == '\0' && ptr->nome[i] == '\0')
+            {
+
+                printf("Digite o novo nome do cliente:\n");
+                gets(ptr->nome);
+                printf("Digite o novo email do cliente:\n");
+                gets(ptr->email);
+                printf("DIgite o novo numero do cliente:\n");
+                gets(ptr->nCelular);
+                fseek(pfile, -sizeof(struct cadastro), 1);
+                fwrite(ptr, sizeof(struct cadastro), 1, pfile);
+                break;
+
+            }
+    }
+    fclose(pfile);
+}
+
+void excluiRegistro(FILE *pfile, struct cadastro *ptr)
+{
+    char nomeLocal[20];
+    int i = 0;
+    printf("Qual o nome do registro que voce deseja alterar?\n");
+    gets(nomeLocal);
+    pfile = fopen("dados.txt", "r+");
+
+
+    while (fread(ptr, sizeof(struct cadastro), 1, pfile) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptr->nome[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptr->nome[i])
+            {
+                break;
+            }
+        }
+            if (nomeLocal[i] == '\0' && ptr->nome[i] == '\0')
+            {
+                ptr->nome[0] = '*';
+                ptr->email[0] = '*';
+                ptr->nCelular[0] = '*';
+
+                fseek(pfile, -sizeof(struct cadastro), 1);
+                fwrite(ptr, sizeof(struct cadastro), 1, pfile);
+                break;
+
+            }
+    }
+    fclose(pfile);
+}
+
+
+
+
+    
 
 int main()
 {
@@ -319,19 +426,19 @@ int main()
         switch (menu)
         {
         case 1:
-            registro(ptr, pFile);
+            registro(pFile, ptr);
             break;
         case 2:
             listarRegistro(pFile, ptr);
             break;
         case 3:
-
+            pesquisaRegistro(pFile, ptr);
             break;
         case 4:
-
+            alteraRegistro(pFile,ptr);
             break;
         case 5:
-
+            excluiRegistro(pFile, ptr);
             break;
         case 6:
             exit(0);
