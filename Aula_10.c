@@ -290,7 +290,13 @@ void registro(FILE *pfile, struct cadastro *ptr)
 void listarRegistro(FILE *pfile, struct cadastro *ptr)
 {
     pfile = fopen("dados.txt", "r");
-    fseek(pfile, 0, 0);
+
+    if(pfile == NULL)
+    {
+        printf("ERRO! O documento ainda nao foi criado.");
+        exit(0);
+    }
+    
     while (fread(ptr, sizeof(struct cadastro), 1, pfile) == 1)
     {
         if(ptr->nome[0] != '*')
@@ -313,7 +319,7 @@ void pesquisaRegistro(FILE *pfile, struct cadastro *ptr)
 
     pfile = fopen("dados.txt", "r");
 
-    fseek(pfile, 0, 0);
+    
     while (fread(ptr, sizeof(struct cadastro), 1, pfile) == 1)
     {
         for (i = 0; nomeLocal[i] != '\0' || ptr->nome[i] != '\0'; i++)
@@ -342,7 +348,7 @@ void alteraRegistro(FILE *pfile, struct cadastro *ptr)
     gets(nomeLocal);
     pfile = fopen("dados.txt", "r+");
 
-    fseek(pfile, 0, 0);
+     //tirar
     while (fread(ptr, sizeof(struct cadastro), 1, pfile) == 1)
     {
         for (i = 0; nomeLocal[i] != '\0' || ptr->nome[i] != '\0'; i++)
@@ -391,9 +397,6 @@ void excluiRegistro(FILE *pfile, struct cadastro *ptr)
             if (nomeLocal[i] == '\0' && ptr->nome[i] == '\0')
             {
                 ptr->nome[0] = '*';
-                ptr->email[0] = '*';
-                ptr->nCelular[0] = '*';
-
                 fseek(pfile, -sizeof(struct cadastro), 1);
                 fwrite(ptr, sizeof(struct cadastro), 1, pfile);
                 break;
