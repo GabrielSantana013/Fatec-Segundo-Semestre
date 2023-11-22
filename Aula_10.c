@@ -1,8 +1,8 @@
-#define ex04
+#define ex03
 #include "stdio.h"
 #include "stdlib.h"
 
-// OBS.: Todos os programa devem ser finalizados pelo usuario.
+//OBS.: Todos os programa devem ser finalizados pelo usuario.
 
 #ifdef ex01
 /*
@@ -20,43 +20,43 @@ int main()
     char imprimeChar;
     char esc;
 
+do
+{
+
+    if((ptrArq = fopen("arq.txt","w"))==NULL)
+	{
+        printf("Erro na abertura do arquivo.\n");
+        exit(0);  //Encerra o programa
+	}
+    printf("Digite caracteres para serem armazenados ('0' finaliza o processo)\n");
+
     do
     {
+        recebeChar = getchar();
+        if(recebeChar != '0')
+            putc(recebeChar, ptrArq);
+    }while(recebeChar != '0');
 
-        if ((ptrArq = fopen("arq.txt", "w")) == NULL)
-        {
-            printf("Erro na abertura do arquivo.\n");
-            exit(0); // Encerra o programa
-        }
-        printf("Digite caracteres para serem armazenados ('0' finaliza o processo)\n");
+    fclose(ptrArq);
 
-        do
-        {
-            recebeChar = getchar();
-            if (recebeChar != '0')
-                putc(recebeChar, ptrArq);
-        } while (recebeChar != '0');
+    if((ptrArq = fopen("arq.txt","r"))==NULL)
+	{
+        printf("Erro na abertura do arquivo.\n");
+        exit(0);  //Encerra o programa
+	}
 
-        fclose(ptrArq);
+	printf("\nCaracteres digitados: ");
+    do
+    {
+        imprimeChar = getc(ptrArq);
+        putchar(imprimeChar);
+    }while(imprimeChar != EOF);
 
-        if ((ptrArq = fopen("arq.txt", "r")) == NULL)
-        {
-            printf("Erro na abertura do arquivo.\n");
-            exit(0); // Encerra o programa
-        }
+    printf("\nDeseja encerrar o programa?\t(s/n)");
+    getchar();
+    scanf("%c",&esc);
 
-        printf("\nCaracteres digitados: ");
-        do
-        {
-            imprimeChar = getc(ptrArq);
-            putchar(imprimeChar);
-        } while (imprimeChar != EOF);
-
-        printf("\nDeseja encerrar o programa?\t(s/n)");
-        getchar();
-        scanf("%c", &esc);
-
-    } while (esc != 'S' && esc != 's');
+}while(esc != 'S' && esc != 's');
 
     return 0;
 }
@@ -96,114 +96,128 @@ void inserirContato(dados *ptrDados)
 {
     FILE *ptrArq;
 
-    if ((ptrArq = fopen("arq.txt", "w")) == NULL)
-    {
+    if((ptrArq = fopen("dados.txt","w"))==NULL)
+	{
         printf("Erro na abertura do arquivo.\n");
-        exit(0); // Encerra o programa
-    }
+        exit(0);  //Encerra o programa
+	}
 
-    for (int i = 0; i < 4; i++)
+	for(int i = 0; i < 4; i++)
     {
-        printf("Digite o nome do %do medico a ser adicionado: \n", i + 1);
-        gets((ptrDados + i)->nome);
+        printf("Digite o nome do %do medico a ser adicionado: \n",i+1);
+        gets((ptrDados+i)->nome);
 
-        printf("Digite o telefone do %do medico a ser adicionado: \n", i + 1);
-        gets((ptrDados + i)->tel);
+        printf("Digite o telefone do %do medico a ser adicionado: \n",i+1);
+        gets((ptrDados+i)->tel);
 
-        printf("Digite o dia do aniversario do %do medico a ser adicionado: \n", i + 1);
-        scanf("%d", &(ptrDados + i)->niverDia);
+        printf("Digite o dia do aniversario do %do medico a ser adicionado: \n",i+1);
+        scanf("%d", &(ptrDados+i)->niverDia);
         getchar();
 
-        printf("Digite o mes do aniversario do %do medico a ser adicionado: \n", i + 1);
-        scanf("%d", &(ptrDados + i)->niverMes);
+        printf("Digite o mes do aniversario do %do medico a ser adicionado: \n",i+1);
+        scanf("%d", &(ptrDados+i)->niverMes);
         getchar();
 
-        fwrite((ptrDados + i), sizeof((ptrDados + i)), 1, ptrArq); // TEM ALGUMA COISA ERRADA C ISSO AQUI
+        fwrite((ptrDados+i), sizeof(dados),1,ptrArq);
     }
 
     fclose(ptrArq);
 }
 
-void listarTodosContatos()
+void listarTodosContatos(dados *ptrDados)
 {
+    FILE *ptrArq;
+
+    ptrArq = fopen("dados.txt", "r");
+
+    for(int i = 0; i < 4; i++)
+    {
+        if((ptrDados+i)->nome[0] != '*')
+        {
+            printf("\nNome do contato: %s\n", (ptrDados+i)->nome);
+            printf("Telefone do contato: %s\n", (ptrDados+i)->tel);
+            printf("Aniversario do contato: %d/%d\n", (ptrDados+i)->niverDia, (ptrDados+i)->niverMes);
+        }
+    }
+    fclose(ptrArq);
 }
 
-void pesquisarContatoNome()
+void pesquisarContatoNome(dados *ptrDados)
 {
+
 }
 
-void pesquisarContatosLetra()
+void pesquisarContatosLetra(dados *ptrDados)
 {
+
 }
 
-void listarAniversariantes()
+void listarAniversariantes(dados *ptrDados)
 {
+
 }
 
-void alterarContato()
+void alterarContato(dados *ptrDados)
 {
+
 }
 
-void excluirContato()
+void excluirContato(dados *ptrDados)
 {
+
 }
 
 int main()
 {
     dados cadastrados[4];
     dados *ptrDados = &cadastrados[0];
-    char select, esc;
+    char select;
 
-    printf("===MENU===\n");
-
-    // do
-    //{
-    printf("[1] - Inserir contato\n[2] - Listar todos os contatos\n[3] - Pesquisar um contato pelo nome\n[4] - Listar os contatos cujo nome inicia com a letra digitada\n[5] - Imprimir os aniversariantes do mês.\n[6] - Alterar contato\n[7] - Excluir contato\n[8] - Sair\n");
-    scanf("%c", &select);
-    getchar(); // Limpa o buffer
-
-    switch (select)
+    do
     {
-    case '1':
-        inserirContato(ptrDados);
-        break;
+        printf("\n\tMENU");
+        printf("\n[1] - Inserir contato\n[2] - Listar todos os contatos\n[3] - Pesquisar um contato pelo nome\n[4] - Listar os contatos cujo nome inicia com a letra digitada\n[5] - Imprimir os aniversariantes do mês.\n[6] - Alterar contato\n[7] - Excluir contato\n[8] - Sair\n");
+        scanf("%c", &select);
+        getchar(); //Limpa o buffer
 
-    case '2':
-        // a
-        break;
+        switch(select)
+        {
+        case '1':
+            inserirContato(ptrDados);
+            break;
 
-    case '3':
-        // a
-        break;
+        case '2':
+            listarTodosContatos(ptrDados);
+            break;
 
-    case '4':
-        // a
-        break;
+        case '3':
+            pesquisarContatoNome(ptrDados);
+            break;
 
-    case '5':
-        // a
-        break;
+        case '4':
+            pesquisarContatosLetra(ptrDados);
+            break;
 
-    case '6':
-        // a
-        break;
+        case '5':
+            listarAniversariantes(ptrDados);
+            break;
 
-    case '7':
-        // a
-        break;
+        case '6':
+            alterarContato(ptrDados);
+            break;
 
-    case '8':
-        exit(0);
+        case '7':
+            excluirContato(ptrDados);
+            break;
 
-    default:
-        printf("Opcao invalida, tente novamente.\n");
-    }
+        case '8':
+            exit(0);
 
-    /*printf("\nDeseja encerrar o programa?\t(s/n)");
-    getchar();
-    scanf("%c",&esc);*/
+        default:
+            printf("Opcao invalida, tente novamente.\n");
+        }
 
-    //}while(esc != 's' && esc != 'S');
+    }while(select != 8);
 
     return 0;
 }
@@ -227,8 +241,263 @@ int main()
     7 - exclui produtos
     8 - saida
 */
+struct produtos
+{
+    char nomeProduto[20], codigoProduto[5];
+    int quantidade;
+};
+
+void registro(FILE *pfile, struct produtos *ptr)
+{
+    char ch;
+    char codigoLocal[5];
+    int i;
+
+    // abre o arquivo para adicionar dados
+    pfile = fopen("dados.txt", "a");
+
+    // se n existir,cria o arquivo
+    if (pfile == NULL)
+    {
+        pfile = fopen("dados.txt", "w+");
+    }
+
+    do
+    {
+        printf("\nDigite o nome do produto:\n");
+        gets(ptr->nomeProduto);
+        printf("Digite o codigo do produto:\n");
+        gets(ptr->codigoProduto);
+        printf("Digite a quantidade do produto:\n");
+        scanf("%d", &(ptr->quantidade));
+        getchar();
+
+        fwrite(ptr, sizeof(struct produtos), 1, pfile);
+
+        printf("Deseja adicionar outro produto? (s) ou (n)\n");
+
+        ch = getchar();
+        getchar();
+
+    } while (ch != 'n' && ch != 'N');
+    fclose(pfile);
+}
+
+void listarProdutos(FILE *pfile, struct produtos *ptr)
+{
+    pfile = fopen("dados.txt", "r");
+
+    while(fread(ptr, sizeof(struct produtos), 1, pfile) == 1)
+    {
+        if(ptr->nomeProduto[0] != '*' && ptr->quantidade != 0)
+        {
+        printf("\nNome do produto: %s\n", ptr->nomeProduto);
+        printf("Codigo do cliente: %s\n", ptr->codigoProduto);
+        printf("Quantidade: %d\n", ptr->quantidade);
+        }
+    }
+
+    fclose(pfile);
+}
+
+void pesquisaProdutos(FILE *pfile, struct produtos *ptr)
+{
+    int i = 0;
+    char nomeLocal[20];
+    printf("Qual o nome do registro que voce deseja buscar?\n");
+    gets(nomeLocal);
+
+    pfile = fopen("dados.txt", "r");
+
+    while (fread(ptr, sizeof(struct produtos), 1, pfile) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptr->nomeProduto[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptr->nomeProduto[i])
+            {
+                break;
+            }
+        }
+            if (nomeLocal[i] == '\0' && ptr->nomeProduto[i] == '\0')
+            {
+                printf("\nNome do produto: %s\n", ptr->nomeProduto);
+                printf("Codigo do produto: %s\n", ptr->codigoProduto);
+                printf("Quantidade: %d\n\n", ptr->quantidade);
+                break;
+            }
+    }
+    fclose(pfile);
+}
+
+void listarProdutosNaoDisp(FILE *pfile, struct produtos *ptr)
+{
+    pfile = fopen("dados.txt", "r");
+
+    while(fread(ptr, sizeof(struct produtos), 1, pfile) == 1)
+    {
+        if(ptr->quantidade == 0)
+        {
+            printf("Nome do produto: %s\n", ptr->nomeProduto);
+            printf("Codigo do cliente: %s\n", ptr->codigoProduto);
+            printf("Quantidade: %d\n", ptr->quantidade);
+        }
+    }
+
+    fclose(pfile);
+}
+
+void alterarQuantidade(FILE *pfile, struct produtos *ptr)
+{
+    char nomeLocal[20];
+    int i = 0, procura;
+    procura = -sizeof(ptr->quantidade);
+
+    printf("Qual o nome do registro que voce deseja alterar?\n");
+    gets(nomeLocal);
+
+    pfile = fopen("dados.txt", "r+");
+
+    while (fread(ptr, sizeof(struct produtos), 1, pfile) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptr->nomeProduto[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptr->nomeProduto[i])
+            {
+                break;
+            }
+        }
+            if (nomeLocal[i] == '\0' && ptr->nomeProduto[i] == '\0')
+            {
+
+                printf("Digite a nova quantidade do produto:\n");
+                scanf("%d",&(ptr->quantidade));
+                getchar();
+
+                fseek(pfile, procura, 1);
+
+                fwrite(&(ptr->quantidade), sizeof(ptr->quantidade), 1, pfile);
+                break;
+            }
+    }
+    printf("%d",ptr->quantidade);
+    fclose(pfile);
+}
+
+void alteraRegistro(FILE *pfile, struct produtos *ptr)
+{
+    char nomeLocal[20];
+    int i = 0, procura;
+    procura = -sizeof(struct produtos);
+
+    printf("Qual o nome do registro que voce deseja alterar?\n");
+    gets(nomeLocal);
+    pfile = fopen("dados.txt", "r+");
+
+    while (fread(ptr, sizeof(struct produtos), 1, pfile) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptr->nomeProduto[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptr->nomeProduto[i])
+            {
+                break;
+            }
+        }
+            if (nomeLocal[i] == '\0' && ptr->nomeProduto[i] == '\0')
+            {
+
+                printf("Digite o novo nome do produto:\n");
+                gets(ptr->nomeProduto);
+                printf("Digite o novo codigo do produto:\n");
+                gets(ptr->codigoProduto);
+                printf("Digite a nova quantidade do produto:\n");
+                scanf("%d",&(ptr->quantidade));
+                getchar();
+
+                fseek(pfile, procura, 1);
+                fwrite(ptr, sizeof(struct produtos), 1, pfile);
+                break;
+            }
+    }
+    fclose(pfile);
+}
+
+void excluiRegistro(FILE *pfile, struct produtos *ptr)
+{
+    char nomeLocal[20];
+    int i = 0;
+    printf("Qual o nome do registro que voce deseja excluir?\n");
+    gets(nomeLocal);
+    pfile = fopen("dados.txt", "r+");
+
+
+    while (fread(ptr, sizeof(struct produtos), 1, pfile) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptr->nomeProduto[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptr->nomeProduto[i])
+            {
+                break;
+            }
+        }
+            if (nomeLocal[i] == '\0' && ptr->nomeProduto[i] == '\0')
+            {
+                ptr->nomeProduto[0] = '*';
+
+                fseek(pfile, -sizeof(struct produtos), 1);
+                fwrite(ptr, sizeof(struct produtos), 1, pfile);
+                break;
+
+            }
+    }
+    fclose(pfile);
+}
+
 int main()
 {
+    int menu;
+    FILE *pFile;
+
+    struct produtos cliente, *ptr;
+    ptr = &cliente;
+
+    do
+    {
+        printf("\n\tMENU");
+        printf("\n1-Incluir produtos\n2-Listar todos os produtos\n3-Pesquisar mercadoria por descricao\n4- Listar os produtos nao disponiveis\n5- Alterar quantidade atual\n6-Alterar produtos\n7-Excluir produtos\n8-Sair\n");
+        printf("Escolha sua opcao: ");
+        scanf("%d", &menu);
+        getchar(); // limpa buffer
+        switch (menu)
+        {
+        case 1:
+            registro(pFile, ptr);
+            break;
+        case 2:
+            listarProdutos(pFile, ptr);
+            break;
+        case 3:
+            pesquisaProdutos(pFile, ptr);
+            break;
+        case 4:
+            listarProdutosNaoDisp(pFile, ptr);
+            break;
+        case 5:
+            alterarQuantidade(pFile, ptr);
+            break;
+        case 6:
+            alteraRegistro(pFile,ptr);
+            break;
+        case 7:
+            excluiRegistro(pFile, ptr);
+            break;
+        case 8:
+            exit(0);
+            break;
+
+        default:
+            printf("Opcao inválida, tente novamente.");
+        }
+    } while (menu != 8);
 
     return 0;
 }
