@@ -363,7 +363,7 @@ struct cadastro
 {
 
     char nome[15], end[35], cidade[15], estado[2];
-    int cep;
+    unsigned int cep;
 };
 
 void cadastrar(struct cadastro *ptr)
@@ -379,8 +379,8 @@ void cadastrar(struct cadastro *ptr)
         printf("Digite o estado da pessoa %d:\n", i);
         gets(ptr->estado);
         printf("Digite o CEP da pessoa %d:\n", i);
-        scanf("%d", &ptr->cep); // perguntar pq &ptr->cep funciona e ptr->cep ñ
-        getchar();              // limpa buffer
+        scanf("%d", &ptr->cep); 
+        getchar();              
 
         ptr++;
     }
@@ -390,12 +390,19 @@ void imprimeCadastro(struct cadastro *ptr)
 {
     for (int i = 1; i <= 4; i++)
     {
+        if(ptr->nome[0] != '*')
+        {
         printf("Nome da pessoa %d: %s\n", i, ptr->nome);
         printf("Endereco da pessoa %d: %s\n", i, ptr->end);
         printf("Cidade da pessoa %d: %s\n", i, ptr->cidade);
         printf("Estado da pessoa %d: %s\n", i, ptr->estado);
         printf("CEP da pessoa %d: %d\n\n\n", i, ptr->cep);
         ptr++;
+        }
+        else
+        {
+            ptr++;
+        } 
     }
 }
 
@@ -432,6 +439,74 @@ int procura(struct cadastro *ptr)
     return 0;
 }
 
+void alteraDados(struct cadastro *ptr)
+{
+    int i = 0, j = 0;
+    char nome[15];
+    printf("Digite o nome que voce deseja buscar:\n\n");
+    gets(&nome);
+    while (j<4)
+    {
+        for (i = 0; nome[i] != '\0' || ptr->nome[i] != '\0'; i++)
+        {
+            if (nome[i] != ptr->nome[i])
+            {
+                break;
+            }
+        }
+        if (nome[i] == '\0' && ptr->nome[i] == '\0')
+        {
+            printf("Digite um novo nome para a pessoa\n");
+            gets(ptr->nome);
+            printf("Digite um novo endereco para a pessoa:\n");
+            gets(ptr->end);
+            printf("Digite uma nova cidade para a pessoa:\n");
+            gets(ptr->cidade);
+            printf("Digite um novo estado para a pessoa:\n");
+            gets(ptr->estado);
+            printf("Digite um novo cep para a pessoa:\n");
+            scanf("%d", &ptr->cep);
+            getchar();//limpa buffer
+            break;
+        }
+        else
+        {
+            ptr++;
+        }
+        j++;
+    }
+    
+}
+void excluiRegistro(struct cadastro *ptr)
+{
+    int i = 0, j = 0;
+    char nome[15];
+    printf("Digite o nome que voce deseja buscar:\n\n");
+    gets(&nome);
+    while (j<4)
+    {
+        for (i = 0; nome[i] != '\0' || ptr->nome[i] != '\0'; i++)
+        {
+            if (nome[i] != ptr->nome[i])
+            {
+                break;
+            }
+        }
+        if (nome[i] == '\0' && ptr->nome[i] == '\0')
+        {
+            ptr->nome[0] = '*';
+            j = 5;
+            
+        }
+        else
+        {
+            ptr++;
+        }
+        j++;
+    }
+}
+
+
 int main()
 {
     int menu;
@@ -462,8 +537,10 @@ int main()
             }
             break;
         case 4:
+            alteraDados(ptr);
             break;
         case 5:
+            excluiRegistro(ptr);
             break;
         case 6:
             exit(0);
