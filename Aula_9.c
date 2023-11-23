@@ -1,6 +1,6 @@
 #include "stdio.h"
 #include "stdlib.h"
-#define ex06
+#define ex01
 
 #ifdef ex01
 
