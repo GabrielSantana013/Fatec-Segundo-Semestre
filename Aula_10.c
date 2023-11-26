@@ -104,17 +104,17 @@ void inserirContato(dados *ptrDados)
 
 	for(int i = 0; i < 4; i++)
     {
-        printf("Digite o nome do %do medico a ser adicionado: \n",i+1);
+        printf("Digite o nome do %do contato a ser adicionado: \n",i+1);
         gets((ptrDados+i)->nome);
 
-        printf("Digite o telefone do %do medico a ser adicionado: \n",i+1);
+        printf("Digite o telefone do %do contato a ser adicionado: \n",i+1);
         gets((ptrDados+i)->tel);
 
-        printf("Digite o dia do aniversario do %do medico a ser adicionado: \n",i+1);
+        printf("Digite o dia do aniversario do %do contato a ser adicionado: \n",i+1);
         scanf("%d", &(ptrDados+i)->niverDia);
         getchar();
 
-        printf("Digite o mes do aniversario do %do medico a ser adicionado: \n",i+1);
+        printf("Digite o mes do aniversario do %do contato a ser adicionado: \n",i+1);
         scanf("%d", &(ptrDados+i)->niverMes);
         getchar();
 
@@ -130,41 +130,181 @@ void listarTodosContatos(dados *ptrDados)
 
     ptrArq = fopen("dados.txt", "r");
 
+    fread(ptrDados, sizeof(dados), 4, ptrArq);
+
     for(int i = 0; i < 4; i++)
     {
-        if((ptrDados+i)->nome[0] != '*')
+        if(ptrDados[i].nome[0] != '*')
         {
             printf("\nNome do contato: %s\n", (ptrDados+i)->nome);
             printf("Telefone do contato: %s\n", (ptrDados+i)->tel);
             printf("Aniversario do contato: %d/%d\n", (ptrDados+i)->niverDia, (ptrDados+i)->niverMes);
         }
+        else
+            printf("\nContato %d excluido\n", i+1);
     }
     fclose(ptrArq);
 }
 
 void pesquisarContatoNome(dados *ptrDados)
 {
+    FILE *ptrArq;
 
+    int i = 0;
+    char nomeLocal[20];
+
+    printf("Qual o nome do contato que voce deseja buscar?\n");
+    gets(nomeLocal);
+
+    ptrArq = fopen("dados.txt", "r");
+
+    while (fread(ptrDados, sizeof(struct dados), 1, ptrArq) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptrDados->nome[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptrDados->nome[i])
+            {
+                break;
+            }
+        }
+            if (nomeLocal[i] == '\0' && ptrDados->nome[i] == '\0')
+            {
+                printf("\nNome do contato: %s\n", ptrDados->nome);
+                printf("Telefone do contato: %s\n", ptrDados->tel);
+                printf("Aniversario do contato: %d/%d\n", ptrDados->niverDia, ptrDados->niverMes);
+                break;
+            }
+    }
+    fclose(ptrArq);
 }
 
 void pesquisarContatosLetra(dados *ptrDados)
 {
+    FILE *ptrArq;
 
+    int i = 0;
+    char charLocal;
+
+    printf("Qual a primeira letra do nome do contato que voce deseja buscar?\n");
+    charLocal = getchar();
+
+    ptrArq = fopen("dados.txt", "r");
+
+    while (fread(ptrDados, sizeof(struct dados), 1, ptrArq) == 1)
+    {
+            if (charLocal == ptrDados->nome[0])
+            {
+                printf("\nNome do contato: %s\n", ptrDados->nome);
+                printf("Telefone do contato: %s\n", ptrDados->tel);
+                printf("Aniversario do contato: %d/%d\n", ptrDados->niverDia, ptrDados->niverMes);
+            }
+    }
+    fclose(ptrArq);
 }
 
 void listarAniversariantes(dados *ptrDados)
 {
+    FILE *ptrArq;
 
+    int i = 0;
+    int mes;
+
+    printf("Qual o mes que deseja visualizar os aniversariantes? (MM)\n");
+    scanf("%d",&mes);
+    getchar();
+
+    ptrArq = fopen("dados.txt", "r");
+
+    while (fread(ptrDados, sizeof(struct dados), 1, ptrArq) == 1)
+    {
+            if (mes == ptrDados->niverMes)
+            {
+                printf("\nNome do contato: %s\n", ptrDados->nome);
+                printf("Telefone do contato: %s\n", ptrDados->tel);
+                printf("Aniversario do contato: %d/%d\n", ptrDados->niverDia, ptrDados->niverMes);
+            }
+    }
+    fclose(ptrArq);
 }
 
-void alterarContato(dados *ptrDados)
+void alterarContato(dados *ptrDados) //alterar essa função
 {
+    FILE *ptrArq;
 
+    char nomeLocal[20];
+    int i = 0, procura;
+    procura = -sizeof(struct dados);
+
+    printf("Qual o nome do registro que voce deseja alterar?\n");
+    gets(nomeLocal);
+    ptrArq = fopen("dados.txt", "r+");
+
+    while (fread(ptrDados, sizeof(struct dados), 1, ptrArq) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptrDados->nome[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptrDados->nome[i])
+            {
+                break;
+            }
+        }
+            if (nomeLocal[i] == '\0' && ptrDados->nome[i] == '\0')
+            {
+
+                printf("Digite o novo nome contato: \n");
+                gets(ptrDados->nome);
+
+                printf("Digite o novo telefone do contato: \n");
+                gets(ptrDados->tel);
+
+                printf("Digite o dia do aniversario do novo contato: \n");
+                scanf("%d", &(ptrDados->niverDia));
+                getchar();
+
+                printf("Digite o mes do aniversario do novo contato: \n");
+                scanf("%d", &(ptrDados->niverMes));
+                getchar();
+
+                fseek(ptrArq, procura, 1);
+                fwrite(ptrDados, sizeof(struct dados), 1, ptrArq);
+                break;
+            }
+    }
+    fclose(ptrArq);
 }
 
 void excluirContato(dados *ptrDados)
 {
+    FILE *ptrArq;
 
+    char nomeLocal[20];
+    int i = 0, procura;
+    procura = -sizeof(struct dados);
+
+    printf("Qual o nome do registro que voce deseja alterar?\n");
+    gets(nomeLocal);
+    ptrArq = fopen("dados.txt", "r+");
+
+    while (fread(ptrDados, sizeof(struct dados), 1, ptrArq) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptrDados->nome[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptrDados->nome[i])
+            {
+                break;
+            }
+        }
+            if (nomeLocal[i] == '\0' && ptrDados->nome[i] == '\0')
+            {
+
+                ptrDados->nome[0] = '*';
+
+                fseek(ptrArq, procura, 1);
+                fwrite(ptrDados, sizeof(struct dados), 1, ptrArq);
+                break;
+            }
+    }
+    fclose(ptrArq);
 }
 
 int main()
@@ -176,7 +316,7 @@ int main()
     do
     {
         printf("\n\tMENU");
-        printf("\n[1] - Inserir contato\n[2] - Listar todos os contatos\n[3] - Pesquisar um contato pelo nome\n[4] - Listar os contatos cujo nome inicia com a letra digitada\n[5] - Imprimir os aniversariantes do mês.\n[6] - Alterar contato\n[7] - Excluir contato\n[8] - Sair\n");
+        printf("\n[1] - Inserir contato\n[2] - Listar todos os contatos\n[3] - Pesquisar um contato pelo nome\n[4] - Listar os contatos cujo nome inicia com a letra digitada\n[5] - Imprimir os aniversariantes do mes.\n[6] - Alterar contato\n[7] - Excluir contato\n[8] - Sair\n");
         scanf("%c", &select);
         getchar(); //Limpa o buffer
 
@@ -222,6 +362,7 @@ int main()
     return 0;
 }
 #endif // ex2
+
 
 #ifdef ex03
 /*
