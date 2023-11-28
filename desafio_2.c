@@ -35,14 +35,15 @@ O programa tem um único arquivo de dados. Não pode usar nenhum arquivo auxilia
 
 Não pode usar nenhuma função de biblioteca a não ser as 6 da apostila e as funções de manipulação de arquivos.*/
 
-typedef struct medicos{
+typedef struct medicos
+{
 
     char nomeMedico[20], nCelular[14], dataConsulta[9];
-}medicos;
+} medicos;
 
-void registro(FILE *pfile, struct medicos *ptr)
+void registro(struct medicos *ptr)
 {
-    char ch;
+    FILE *pfile;
     int bytes;
     bytes = sizeof(struct medicos);
 
@@ -55,52 +56,48 @@ void registro(FILE *pfile, struct medicos *ptr)
     // abre o arquivo para adicionar dados
     pfile = fopen("desafio2.txt", "a");
 
-    do
-    {
-        printf("Digite o nome do Medico:\n");
-        gets(ptr->nomeMedico);
-        printf("Digite a data da consulta (ddMMAAAA):\n");
-        gets(ptr->dataConsulta);
-        printf("Digite o numero de celular do Medico:\n");
-        gets(ptr->nCelular);
+    printf("Digite o nome do Medico:\n");
+    gets(ptr->nomeMedico);
+    printf("Digite a data da consulta (ddMMAAAA):\n");
+    gets(ptr->dataConsulta);
+    printf("Digite o numero de celular do Medico:\n");
+    gets(ptr->nCelular);
 
-        fwrite(ptr, bytes, 1, pfile);
-        printf("Deseja adicionar outro Medico? (s) ou (n)\n");
-        ch = getchar();
-        getchar();
+    fwrite(ptr, bytes, 1, pfile);
 
-    } while (ch != 'n' && ch != 'N');
     fclose(pfile);
 }
 
-void listarRegistro(FILE *pfile, struct medicos *ptr)
+void listarRegistro(struct medicos *ptr)
 {
+    FILE *pfile;
     pfile = fopen("desafio2.txt", "r");
     int bytes;
     bytes = sizeof(struct medicos);
 
-    if(pfile == NULL)
+    if (pfile == NULL)
     {
         printf("ERRO! O documento ainda nao foi criado.");
         exit(0);
     }
-    
+
     while (fread(ptr, bytes, 1, pfile) == 1)
     {
-        if(ptr->nomeMedico[0] != '*')
+        if (ptr->nomeMedico[0] != '*')
         {
-        printf("\nNome do Medico: %s\n", ptr->nomeMedico);
-        printf("Data da consulta: %s\n", ptr->dataConsulta);
-        printf("Numero de celular do Medico: %s\n", ptr->nCelular);
+            printf("\nNome do Medico: %s\n", ptr->nomeMedico);
+            printf("Data da consulta: %s\n", ptr->dataConsulta);
+            printf("Numero de celular do Medico: %s\n", ptr->nCelular);
         }
     }
 
     fclose(pfile);
 }
 
-void pesquisaRegistro(FILE *pfile, struct medicos *ptr)
+void pesquisaRegistro(struct medicos *ptr)
 {
-    int i = 0, bytes;
+    FILE *pfile;
+    int i = 0, j = 0, bytes;
     char nomeLocal[20];
     bytes = sizeof(struct medicos);
     printf("Qual o nome do Medico que voce deseja buscar?\n");
@@ -108,7 +105,6 @@ void pesquisaRegistro(FILE *pfile, struct medicos *ptr)
 
     pfile = fopen("desafio2.txt", "r");
 
-    
     while (fread(ptr, bytes, 1, pfile) == 1)
     {
         for (i = 0; nomeLocal[i] != '\0' || ptr->nomeMedico[i] != '\0'; i++)
@@ -118,20 +114,28 @@ void pesquisaRegistro(FILE *pfile, struct medicos *ptr)
                 break;
             }
         }
-            if (nomeLocal[i] == '\0' && ptr->nomeMedico[i] == '\0')
-            {
-                printf("\nNome do Medico: %s\n", ptr->nomeMedico);
-                printf("Data da consulta: %s\n", ptr->dataConsulta);
-                printf("Numero de celular do Medico: %s\n\n", ptr->nCelular);
-                break;
-            }
+        if (nomeLocal[i] == '\0' && ptr->nomeMedico[i] == '\0')
+        {
+            printf("\nNome do Medico: %s\n", ptr->nomeMedico);
+            printf("Data da consulta: %s\n", ptr->dataConsulta);
+            printf("Numero de celular do Medico: %s\n\n", ptr->nCelular);
+            j++;
+            break;
+        }
     }
+
+    if(j == 0)
+    {
+    printf("\nMedico nao encontrado!\n");
+    }
+
     fclose(pfile);
 }
 
-void pesquisaNumero(FILE *pfile, struct medicos *ptr)
+void pesquisaNumero(struct medicos *ptr)
 {
-    int i = 0, bytes;
+    FILE *pfile;
+    int i = 0, bytes, j = 0;
     char nomeLocal[20];
     bytes = sizeof(struct medicos);
     printf("Qual o nome do Medico que voce deseja buscar o Numero?\n");
@@ -139,7 +143,6 @@ void pesquisaNumero(FILE *pfile, struct medicos *ptr)
 
     pfile = fopen("desafio2.txt", "r");
 
-    
     while (fread(ptr, bytes, 1, pfile) == 1)
     {
         for (i = 0; nomeLocal[i] != '\0' || ptr->nomeMedico[i] != '\0'; i++)
@@ -149,18 +152,24 @@ void pesquisaNumero(FILE *pfile, struct medicos *ptr)
                 break;
             }
         }
-            if (nomeLocal[i] == '\0' && ptr->nomeMedico[i] == '\0')
-            {
-                printf("\nNumero de celular do Medico %s: %s\n",ptr->nomeMedico, ptr->nCelular);
-                break;
-            }
+        if (nomeLocal[i] == '\0' && ptr->nomeMedico[i] == '\0')
+        {
+            printf("\nNumero de celular do Medico %s: %s\n", ptr->nomeMedico, ptr->nCelular);
+            j++;
+            break;
+        }
+    }
+    if(j == 0)
+    {
+    printf("\nMedico nao encontrado!\n");
     }
     fclose(pfile);
 }
 
-void pesquisaPelaData(FILE *pfile, struct medicos *ptr)
+void pesquisaPelaData(struct medicos *ptr)
 {
-    int i = 0, bytes;
+    FILE *pfile;
+    int i = 0, j = 0, bytes;
     char dataConsultaLocal[9];
     bytes = sizeof(struct medicos);
     printf("Digite a data da consulta para procurar o nome do Medico:\n");
@@ -168,7 +177,6 @@ void pesquisaPelaData(FILE *pfile, struct medicos *ptr)
 
     pfile = fopen("desafio2.txt", "r");
 
-    
     while (fread(ptr, bytes, 1, pfile) == 1)
     {
         for (i = 0; dataConsultaLocal[i] != '\0' || ptr->dataConsulta[i] != '\0'; i++)
@@ -178,62 +186,29 @@ void pesquisaPelaData(FILE *pfile, struct medicos *ptr)
                 break;
             }
         }
-            if (dataConsultaLocal[i] == '\0' && ptr->dataConsulta[i] == '\0')
-            {
-                printf("\nNome do Medico: %s\n", ptr->nomeMedico);
-                
-            }
-    }
-    fclose(pfile);
-}
-
-void alteraDados(FILE *pfile, struct medicos *ptr)
-{
- char nomeLocal[20];
-    int i = 0, bytes;
-
-    bytes = sizeof(struct medicos);
-    printf("Qual o nome do registro que voce deseja alterar?\n");
-    gets(nomeLocal);
-    pfile = fopen("desafio2.txt", "r+");
-
-    while (fread(ptr,bytes, 1, pfile) == 1)
-    {
-        for (i = 0; nomeLocal[i] != '\0' || ptr->nomeMedico[i] != '\0'; i++)
+        if (dataConsultaLocal[i] == '\0' && ptr->dataConsulta[i] == '\0')
         {
-            if (nomeLocal[i] != ptr->nomeMedico[i])
-            {
-                break;
-            }
+            printf("\nNome do Medico: %s\n", ptr->nomeMedico);
+            j++;
         }
-            if (nomeLocal[i] == '\0' && ptr->nomeMedico[i] == '\0')
-            {
-
-                printf("Digite o novo nome do Medico:\n");
-                gets(ptr->nomeMedico);
-                printf("Digite a nova data da consulta:\n");
-                gets(ptr->dataConsulta);
-                printf("Digite o novo numero do Medico:\n");
-                gets(ptr->nCelular);
-                fseek(pfile, -bytes, 1);
-                fwrite(ptr, bytes, 1, pfile);
-                break;
-
-            }
+    }
+    if(j == 0)
+    {
+    printf("\nMedico nao encontrado!\n");
     }
     fclose(pfile);
 }
 
-
-void excluiDados(FILE *pfile, struct medicos *ptr)
+void alteraDados(struct medicos *ptr)
 {
- char nomeLocal[20];
-    int i = 0, bytes;
+    FILE *pfile;
+    char nomeLocal[20];
+    int i = 0, j = 0, bytes;
+
     bytes = sizeof(struct medicos);
     printf("Qual o nome do registro que voce deseja alterar?\n");
     gets(nomeLocal);
     pfile = fopen("desafio2.txt", "r+");
-
 
     while (fread(ptr, bytes, 1, pfile) == 1)
     {
@@ -244,59 +219,107 @@ void excluiDados(FILE *pfile, struct medicos *ptr)
                 break;
             }
         }
-            if (nomeLocal[i] == '\0' && ptr->nomeMedico[i] == '\0')
-            {
-                ptr->nomeMedico[0] = '*';
-                fseek(pfile, -bytes, 1);
-                fwrite(ptr, bytes, 1, pfile);
-                break;
+        if (nomeLocal[i] == '\0' && ptr->nomeMedico[i] == '\0')
+        {
 
-            }
+            printf("Digite o novo nome do Medico:\n");
+            gets(ptr->nomeMedico);
+            printf("Digite a nova data da consulta:\n");
+            gets(ptr->dataConsulta);
+            printf("Digite o novo numero do Medico:\n");
+            gets(ptr->nCelular);
+            fseek(pfile, -bytes, 1);
+            fwrite(ptr, bytes, 1, pfile);
+            j++;
+            break;
+        }
+    }
+    if(j == 0)
+    {
+    printf("\nMedico nao encontrado!\n");
     }
     fclose(pfile);
 }
-    
-int main(){
 
+void excluiDados(struct medicos *ptr)
+{
     FILE *pfile;
+    char nomeLocal[20];
+    int i = 0, j = 0, bytes;
+    bytes = sizeof(struct medicos);
+    printf("Qual o nome do registro que voce deseja alterar?\n");
+    gets(nomeLocal);
+    pfile = fopen("desafio2.txt", "r+");
+
+    while (fread(ptr, bytes, 1, pfile) == 1)
+    {
+        for (i = 0; nomeLocal[i] != '\0' || ptr->nomeMedico[i] != '\0'; i++)
+        {
+            if (nomeLocal[i] != ptr->nomeMedico[i])
+            {
+                break;
+            }
+        }
+        if (nomeLocal[i] == '\0' && ptr->nomeMedico[i] == '\0')
+        {
+            ptr->nomeMedico[0] = '*';
+            fseek(pfile, -bytes, 1);
+            fwrite(ptr, bytes, 1, pfile);
+            j++;
+            break;
+        }
+    }
+    if(j == 0)
+    {
+    printf("\nMedico nao encontrado!\n");
+    }
+    fclose(pfile);
+}
+
+int main()
+{
+
     int menu;
 
     medicos *ptr, medico;
     ptr = &medico;
-    do{
-    printf("\nDesafio 2!\n\n");
-    printf("1-Entrada de dados\n2-Listar Dados\n3-Pesquisa Medico\n4-Pesquisar numero do medico\n5-Pesquisar pela Data da Consulta\n6-Altera Dados\n7-Exclui Dados\n8-Sair\n");
-    scanf("%d", &menu);
-    getchar(); //limpa buffer
+    do
+    {
+        printf("\nDesafio 2!\n\n");
+        printf("1-Entrada de dados\n2-Listar Dados\n3-Pesquisa Medico\n4-Pesquisar numero do medico\n5-Pesquisar pela Data da Consulta\n6-Altera Dados\n7-Exclui Dados\n8-Sair\n");
+        scanf("%d", &menu);
+        getchar(); // limpa buffer
 
-    switch(menu){
+        switch (menu)
+        {
         case 1:
-            registro(pfile, ptr);
+            registro(ptr);
             break;
         case 2:
-            listarRegistro(pfile, ptr);
+            listarRegistro(ptr);
             break;
         case 3:
-            pesquisaRegistro(pfile, ptr);
+            pesquisaRegistro(ptr);
             break;
         case 4:
-            pesquisaNumero(pfile, ptr);
+            pesquisaNumero(ptr);
             break;
         case 5:
-            pesquisaPelaData(pfile, ptr);
+            pesquisaPelaData(ptr);
             break;
         case 6:
-            alteraDados(pfile, ptr);
+            alteraDados(ptr);
             break;
         case 7:
-            excluiDados(pfile, ptr);
+            excluiDados(ptr);
             break;
         case 8:
             exit(0);
             break;
+        }
 
-    }
-
-    }while(menu != 8);
+    } while (menu != 8);
     return 0;
 }
+
+// printa a mensagem de erro
