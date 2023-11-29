@@ -27,11 +27,11 @@ A única estrutura de dados do programa deve ser uma variável local na função
 
 Cada uma das opções do menu é uma função no programa.
 
-O médico é a “chave primário” do banco de dados.
+O médico é a “chave primário” do banco de dados
 
 Todas as operações de leitura e escrita devem ser feitas direto no arquivo. (utilize a função fseek quando necessário).
 
-O programa tem um único arquivo de dados. Não pode usar nenhum arquivo auxiliar.
+O programa tem um único arquivo de dados. Não pode usar nenhum arquivo auxiliar
 
 Não pode usar nenhuma função de biblioteca a não ser as 6 da apostila e as funções de manipulação de arquivos.*/
 
@@ -124,9 +124,9 @@ void pesquisaRegistro(struct medicos *ptr)
         }
     }
 
-    if(j == 0)
+    if (j == 0)
     {
-    printf("\nMedico nao encontrado!\n");
+        printf("\nMedico nao encontrado!\n");
     }
 
     fclose(pfile);
@@ -159,9 +159,9 @@ void pesquisaNumero(struct medicos *ptr)
             break;
         }
     }
-    if(j == 0)
+    if (j == 0)
     {
-    printf("\nMedico nao encontrado!\n");
+        printf("\nMedico nao encontrado!\n");
     }
     fclose(pfile);
 }
@@ -192,9 +192,9 @@ void pesquisaPelaData(struct medicos *ptr)
             j++;
         }
     }
-    if(j == 0)
+    if (j == 0)
     {
-    printf("\nMedico nao encontrado!\n");
+        printf("\nMedico nao encontrado!\n");
     }
     fclose(pfile);
 }
@@ -234,9 +234,9 @@ void alteraDados(struct medicos *ptr)
             break;
         }
     }
-    if(j == 0)
+    if (j == 0)
     {
-    printf("\nMedico nao encontrado!\n");
+        printf("\nMedico nao encontrado!\n");
     }
     fclose(pfile);
 }
@@ -269,9 +269,9 @@ void excluiDados(struct medicos *ptr)
             break;
         }
     }
-    if(j == 0)
+    if (j == 0)
     {
-    printf("\nMedico nao encontrado!\n");
+        printf("\nMedico nao encontrado!\n");
     }
     fclose(pfile);
 }
@@ -322,4 +322,3 @@ int main()
     return 0;
 }
 
-// printa a mensagem de erro
